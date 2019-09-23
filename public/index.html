@@ -31,8 +31,6 @@ window1()
 		var dataPoints4 = [];
 		var data = [];
 			
-		
-			
 		var info = {
 			zoomEnabled: true,
 			theme:"light2",
@@ -97,6 +95,8 @@ window1()
 
 			}]
 		}
+			
+		
 		console.log("Asi se ve Datapoints despues")
 		console.log(dataPoints1)
 
@@ -128,7 +128,7 @@ window1()
 			jQuery.getJSON("/Generar", function addData(data) {
 			console.log(data)
 			// dataPoints1=[]
-			for (var i = 0; i < data.length; i++) {
+			for (var i = data.length-1; i >= 0; i--) {
 				console.log("Iteracion"+i)
 				console.log("data["+i+"]")
 				console.log({
@@ -162,8 +162,79 @@ window1()
 				
 					
 				});
-
+				
 			}
+			dataPoints1=[];
+			dataPoints2=[];
+			dataPoints3=[];
+			dataPoints4=[];
+
+			info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				}, 
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+
+			}]
+		}
+
+
 			console.log("Data points")
 			console.log(dataPoints1)
 			chart.render();
@@ -185,15 +256,115 @@ var dataPoints2 = [];
 var dataPoints3 = [];
 var dataPoints4 = [];
 var data = [];
-    
-//setInterval(drawChart, 9000);
+
+var info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				}, 
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+
+			}]
+		}
+
+setInterval(drawChart, 9000);
 
  function drawChart()
    {
 jQuery.getJSON("sample.json", addData);
    }
     
-var info = {
+
+var chart = new CanvasJS.Chart("chartContainer", info);
+
+    
+//Aquí le agregué esto 
+function addData(data) {
+	for (var i = data.length-1; i > 0; i--) {
+		console.log("Estoy donde no es 2")
+		dataPoints1.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Red)
+		});
+	
+		dataPoints2.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Panel)
+		});
+
+		dataPoints3.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Bateria)
+		});
+	
+		dataPoints4.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Carga)
+		});
+	}
+
+	var dataPoints1 = [];
+	var dataPoints2 = [];
+	var dataPoints3 = [];
+	var dataPoints4 = [];
+	var data = [];
+
+	info = {
 	theme:"light2",
 	animationEnabled: true,
     zoomEnabled: true,
@@ -245,38 +416,6 @@ var info = {
 
 	}]
 }
-var chart = new CanvasJS.Chart("chartContainer", info);
-
-    
-//Aquí le agregué esto 
-function addData(data) {
-	for (var i = 0; i < data.length; i++) {
-		console.log("Estoy donde no es 2")
-		dataPoints1.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Red)
-		});
-	}
-   
-    for (var i = 0; i < data.length; i++) {
-		dataPoints2.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Panel)
-		});
-    }
-        for (var i = 0; i < data.length; i++) {
-		dataPoints3.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Bateria)
-		});
-	}
-     for (var i = 0; i < data.length; i++) {
-		dataPoints4.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Carga)
-		});
-	}
-
 
 	chart.render();
 }
@@ -306,7 +445,7 @@ var dataPoints3 = [];
 var dataPoints4 = [];
 var data = [];
     
-//setInterval(drawChart, 9000);
+setInterval(drawChart, 9000);
 
  function drawChart()
    {
@@ -370,32 +509,93 @@ var chart = new CanvasJS.Chart("chartContainer", info);
     
 //Aquí le agregué esto 
 function addData(data) {
-	for (var i = 0; i < data.length; i++) {
+	for (var i = data.length-1; i > 0; i--) {
 		console.log("Estoy donde no es 2")
 		dataPoints1.push({
 			label: data[i].Date,
 			y: parseFloat(data[i].Red)
 		});
-	}
-   
-    for (var i = 0; i < data.length; i++) {
+	
 		dataPoints2.push({
 			label: data[i].Date,
 			y: parseFloat(data[i].Panel)
 		});
-    }
-        for (var i = 0; i < data.length; i++) {
+    
 		dataPoints3.push({
 			label: data[i].Date,
 			y: parseFloat(data[i].Bateria)
 		});
-	}
-     for (var i = 0; i < data.length; i++) {
+
 		dataPoints4.push({
 			label: data[i].Date,
 			y: parseFloat(data[i].Carga)
 		});
 	}
+
+	info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				}, 
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+
+			}]
+		}
 
 
 	chart.render();
