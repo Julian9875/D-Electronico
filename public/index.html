@@ -127,7 +127,7 @@ window1()
 			console.log("Getting Data")
 			jQuery.getJSON("/Generar", function addData(data) {
 			console.log(data)
-			//dataPoints1=[]
+			// dataPoints1=[]
 			for (var i = 0; i < data.length; i++) {
 				console.log("Iteracion"+i)
 				console.log("data["+i+"]")
@@ -144,6 +144,25 @@ window1()
 				
 					
 				});
+				dataPoints2.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P2),
+				
+					
+				});
+				dataPoints3.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P3),
+				
+					
+				});
+				dataPoints4.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P4),
+				
+					
+				});
+
 			}
 			console.log("Data points")
 			console.log(dataPoints1)
