@@ -6,13 +6,13 @@
     
 <!--- Dropdown menu -->
 <div class="btn-group">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" >
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" >
     Seleccione <span class="caret"></span>
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-    <button class="dropdown-item" type="button" onclick= "window.onload1()">Día</button>
-    <button class="dropdown-item" type="button" onclick= "window.onload2()">Semana</button>
-    <button class="dropdown-item" type="button" onclick= "window.onload3()">Mes</button>
+    <button class="dropdown-item" type="button" onclick= "window1()">Día</button>
+    <button class="dropdown-item" type="button" onclick= "window2()">Semana</button>
+    <button class="dropdown-item" type="button" onclick= "window3()">Mes</button>
   </div>
 </div>
 <!--- Dropdown menu -->
@@ -22,15 +22,16 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     
 <script>
-    
-	window.onload1 = function () {
-		var dataPoints1 = [];
+window1()
+	 function window1 () {
+		var dataPoints1 = []
+		console.log(dataPoints1)
 		var dataPoints2 = [];
 		var dataPoints3 = [];
 		var dataPoints4 = [];
 		var data = [];
 			
-
+		
 			
 		var info = {
 			zoomEnabled: true,
@@ -64,7 +65,7 @@
 				showInLegend: true,
 				name: "Red",
 				dataPoints: dataPoints1
-		}, 
+				}, 
 				{
 				type: "spline",
 				showInLegend: true,
@@ -96,9 +97,10 @@
 
 			}]
 		}
+		console.log("Asi se ve Datapoints despues")
+		console.log(dataPoints1)
 
 		var chart = new CanvasJS.Chart("chartContainer", info);
-
 			
 		//Add Data
 		
@@ -115,23 +117,38 @@
 			}
 			
 		}
+		
 		drawChart();
 		setInterval(drawChart, 9000);
 
 		function drawChart()
 		{
+			
 			console.log("Getting Data")
 			jQuery.getJSON("/Generar", function addData(data) {
 			console.log(data)
+			//dataPoints1=[]
 			for (var i = 0; i < data.length; i++) {
+				console.log("Iteracion"+i)
+				console.log("data["+i+"]")
+				console.log({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P1),
+					
+				})
+				console.log("datapoints1")
+				console.log(dataPoints1)
 				dataPoints1.push({
 					label: data[i].datetime,
-					y: parseFloat(data[i].P1)
+					y: parseFloat(data[i].P1),
+				
+					
 				});
 			}
 			console.log("Data points")
 			console.log(dataPoints1)
 			chart.render();
+			console.log(dataPoints1)
 		});
 
 					
@@ -143,7 +160,7 @@
 
 <script>
     
-window.onload2 = function () {
+ function window2 () {
 var dataPoints1 = [];
 var dataPoints2 = [];
 var dataPoints3 = [];
@@ -215,6 +232,7 @@ var chart = new CanvasJS.Chart("chartContainer", info);
 //Aquí le agregué esto 
 function addData(data) {
 	for (var i = 0; i < data.length; i++) {
+		console.log("Estoy donde no es 2")
 		dataPoints1.push({
 			label: data[i].Date,
 			y: parseFloat(data[i].Red)
@@ -240,13 +258,7 @@ function addData(data) {
 		});
 	}
 
-//      if (dataPoints4.length >  4 )0
-//    {
-//        dataPoints1.shift();
-//        dataPoints2.shift();
-//        dataPoints3.shift();
-//        dataPoints4.shift();
-//    }
+
 	chart.render();
 }
 
@@ -268,7 +280,7 @@ function toggleDataSeries(e) {
     
     <script>
     
-window.onload3 = function () {
+ function window3 () {
 var dataPoints1 = [];
 var dataPoints2 = [];
 var dataPoints3 = [];
@@ -340,6 +352,7 @@ var chart = new CanvasJS.Chart("chartContainer", info);
 //Aquí le agregué esto 
 function addData(data) {
 	for (var i = 0; i < data.length; i++) {
+		console.log("Estoy donde no es 2")
 		dataPoints1.push({
 			label: data[i].Date,
 			y: parseFloat(data[i].Red)
@@ -365,13 +378,7 @@ function addData(data) {
 		});
 	}
 
-//      if (dataPoints4.length >  4 )0
-//    {
-//        dataPoints1.shift();
-//        dataPoints2.shift();
-//        dataPoints3.shift();
-//        dataPoints4.shift();
-//    }
+
 	chart.render();
 }
 

@@ -45,7 +45,6 @@ var fs = require('fs');
 
 
 app.get('/Generar',function(req,res){
-
   var con = mysql.createConnection({
     host: "db4free.net",
     user: "baenav",
@@ -54,21 +53,23 @@ app.get('/Generar',function(req,res){
   });
   console.log('Generando')
 
-  const quer1 = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos ORDER BY fecha DESC, hora DESC LIMIT 500"
+  const quer1 = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos ORDER BY fecha DESC, hora DESC LIMIT 100"
+  
 
   
   con.connect(function(err) {
     if (err) throw err;
-    con.query( quer1 , function (err, result, fields) {
-      if (err) throw err;
-      console.log(result);
-      
-      console.log(JSON.stringify(result))
-      res.send(JSON.stringify(result));
-      con.end();
-      });
-  }
-  );
+    });
+
+  con.query( quer1 , function (err, result, fields) {
+    if (err) throw err;
+    //console.log(result);
+    //console.log(JSON.stringify(result))
+    res.send(JSON.stringify(result));
+    
+    });
+  con.end(); 
+  
   
 })
 
