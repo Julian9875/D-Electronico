@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--- Dropdown menu -->
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle"
+          data-toggle="dropdown">
+    Seleccione <span class="caret"></span>
+  </button>
+
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="principal.html">Dia</a></li>
+    <li><a href="Semana.html">Semana</a></li>
+    <li><a href="Mes.html">Mes</a></li>
+  </ul>
+</div>
+<!--- Dropdown menu -->
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
+<script>
+window.onload = function () {
+var dataPoints1 = [];
+var dataPoints2 = [];
+var dataPoints3 = [];
+var dataPoints4 = [];
+var data = [];
+    
+setInterval(drawChart, 9000);
+
+ function drawChart()
+   {
+jQuery.getJSON("sample.json", addData);
+   }
+    
+var info = {
+	theme:"light2",
+	animationEnabled: true,
+    zoomEnabled: true,
+    exportEnabled: true,
+	title:{
+		text: "Potencia generada: Nodo 611"
+	},
+	axisY :{
+		includeZero: false,
+		title: "Potencia [W]",
+		suffix: "W"
+	},
+	toolTip: {
+		shared: "true"
+	},
+	legend:{
+		cursor:"pointer",
+		itemclick : toggleDataSeries
+	},
+	data: [{
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Red",
+		dataPoints: dataPoints1
+}, 
+          {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Panel",
+		dataPoints: dataPoints2
+
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Bateria",
+		dataPoints: dataPoints3
+
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Carga",
+		dataPoints: dataPoints4
+
+	}]
+}
+
+var chart = new CanvasJS.Chart("chartContainer", info);
+
+    
+//Aquí le agregué esto 
+function addData(data) {
+	for (var i = 0; i < data.length; i++) {
+		dataPoints1.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Red)
+		});
+	}
+   
+    for (var i = 0; i < data.length; i++) {
+		dataPoints2.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Panel)
+		});
+    }
+        for (var i = 0; i < data.length; i++) {
+		dataPoints3.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Bateria)
+		});
+	}
+     for (var i = 0; i < data.length; i++) {
+		dataPoints4.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Carga)
+		});
+	}
+
+//      if (dataPoints4.length >  4 )0
+//    {
+//        dataPoints1.shift();
+//        dataPoints2.shift();
+//        dataPoints3.shift();
+//        dataPoints4.shift();
+//    }
+	chart.render();
+}
+
+    
+    
+//Hasta aquí
+
+function toggleDataSeries(e) {
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	
+	}
+}
+    
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

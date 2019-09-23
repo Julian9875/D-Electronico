@@ -1,0 +1,26 @@
+[
+    {
+   "Date": "11:20 am",
+   "Red": "21",
+   "Panel": "10",
+   "Bateria": "56",
+   "Carga": "71"},
+	{
+    "Date": "11:30 am",
+    "Red": "56",
+    "Panel": "71",
+    "Bateria": "11",
+    "Carga": "21"}, 
+	{
+    "Date": "11:40 am",
+    "Red": "4",
+    "Panel": "9",
+    "Bateria": "11",
+    "Carga": "71"},
+	{
+    "Date": "11:50 am",
+    "Red": "61",
+    "Panel": "45",
+    "Bateria": "11",
+    "Carga": "71"}
+]

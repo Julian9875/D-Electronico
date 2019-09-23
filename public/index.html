@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
 <!--- Dropdown menu -->
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Seleccione
+<div class="btn-group">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" >
+    Seleccione <span class="caret"></span>
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
     <button class="dropdown-item" type="button" onclick= "window.onload1()">Día</button>
@@ -23,125 +23,119 @@
     
 <script>
     
-window.onload1 = function () {
-var dataPoints1 = [];
-var dataPoints2 = [];
-var dataPoints3 = [];
-var dataPoints4 = [];
-var data = [];
-    
-setInterval(drawChart, 9000);
+	window.onload1 = function () {
+		var dataPoints1 = [];
+		var dataPoints2 = [];
+		var dataPoints3 = [];
+		var dataPoints4 = [];
+		var data = [];
+			
 
- function drawChart()
-   {
-jQuery.getJSON("sample.json", addData);
-   }
-    
-var info = {
-	theme:"light2",
-	animationEnabled: true,
-    zoomEnabled: true,
-    exportEnabled: true,
-	title:{
-		text: "Potencia generada: Nodo 611"
-	},
-	axisY :{
-		includeZero: false,
-		title: "Potencia [W]",
-		suffix: "W"
-	},
-	toolTip: {
-		shared: "true"
-	},
-	legend:{
-		cursor:"pointer",
-		itemclick : toggleDataSeries
-	},
-	data: [{
-		type: "spline",
-		showInLegend: true,
-		yValueFormatString: "##.00 W",
-		name: "Red",
-		dataPoints: dataPoints1
-}, 
-          {
-		type: "spline",
-		showInLegend: true,
-		yValueFormatString: "##.00 W",
-		name: "Panel",
-		dataPoints: dataPoints2
+			
+		var info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+		}, 
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
 
-	},
-           {
-		type: "spline",
-		showInLegend: true,
-		yValueFormatString: "##.00 W",
-		name: "Bateria",
-		dataPoints: dataPoints3
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
 
-	},
-           {
-		type: "spline",
-		showInLegend: true,
-		yValueFormatString: "##.00 W",
-		name: "Carga",
-		dataPoints: dataPoints4
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
 
-	}]
-}
-var chart = new CanvasJS.Chart("chartContainer", info);
+			}]
+		}
 
-    
-//Aquí le agregué esto 
-function addData(data) {
-	for (var i = 0; i < data.length; i++) {
-		dataPoints1.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Red)
+		var chart = new CanvasJS.Chart("chartContainer", info);
+
+			
+		//Add Data
+		
+
+			
+			
+		//Hasta aquí
+
+		function toggleDataSeries(e) {
+			if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+				e.dataSeries.visible = false;
+			} else {
+				e.dataSeries.visible = true;
+			}
+			
+		}
+		drawChart();
+		setInterval(drawChart, 9000);
+
+		function drawChart()
+		{
+			console.log("Getting Data")
+			jQuery.getJSON("/Generar", function addData(data) {
+			console.log(data)
+			for (var i = 0; i < data.length; i++) {
+				dataPoints1.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P1)
+				});
+			}
+			console.log("Data points")
+			console.log(dataPoints1)
+			chart.render();
 		});
-	}
-   
-    for (var i = 0; i < data.length; i++) {
-		dataPoints2.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Panel)
-		});
-    }
-        for (var i = 0; i < data.length; i++) {
-		dataPoints3.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Bateria)
-		});
-	}
-     for (var i = 0; i < data.length; i++) {
-		dataPoints4.push({
-			label: data[i].Date,
-			y: parseFloat(data[i].Carga)
-		});
-	}
 
-//      if (dataPoints4.length >  4 )0
-//    {
-//        dataPoints1.shift();
-//        dataPoints2.shift();
-//        dataPoints3.shift();
-//        dataPoints4.shift();
-//    }
-	chart.render();
-}
-
-    
-    
-//Hasta aquí
-
-function toggleDataSeries(e) {
-	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
-		e.dataSeries.visible = false;
-	} else {
-		e.dataSeries.visible = true;
-	}
-	
-	}
+					
+		}
 
 }
     
@@ -156,7 +150,7 @@ var dataPoints3 = [];
 var dataPoints4 = [];
 var data = [];
     
-setInterval(drawChart, 9000);
+//setInterval(drawChart, 9000);
 
  function drawChart()
    {
@@ -281,7 +275,7 @@ var dataPoints3 = [];
 var dataPoints4 = [];
 var data = [];
     
-setInterval(drawChart, 9000);
+//setInterval(drawChart, 9000);
 
  function drawChart()
    {
