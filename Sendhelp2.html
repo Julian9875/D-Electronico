@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> 
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel='shortcut icon' type='image/png' href='./assets/img/favicon2.png'/>
+	<link rel='stylesheet' href='./assets/css/materialize.css'>
+<!--- ESTO ES LO NUEVO -->
+<div class="dropdown">
+    <br>
+    <br>
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Registro de históricos
+  </button>
+  <div class="dropdown-content" aria-labelledby="dropdownMenu2">
+    <button  class="dropdown-item" type="button">Día</button>
+    <button class="dropdown-item" type="button">Semana</button>
+    <button class="dropdown-item" type="button">Mes</button>
+  </div>
+</div>
+    <br>
+    <br>
+<!--- ESTO ES LO NUEVO -->
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 80%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
+<script>
+    
+window.onload = function () {
+var dataPoints1 = [];
+var dataPoints2 = [];
+var dataPoints3 = [];
+var dataPoints4 = [];
+var data = [];
+    
+setInterval(drawChart, 9000);
+ function drawChart()
+   {
+jQuery.getJSON("sample.json", addData);
+   }
+    
+var info = {
+	theme:"light2",
+	animationEnabled: true,
+    zoomEnabled: true,
+	title:{
+		text: "Potencia generada: Nodo 611"
+        
+	},
+    
+   
+	axisY :{
+		includeZero: false,
+		title: "Potencia [W]",
+		suffix: "W"
+	},
+	toolTip: {
+		shared: "true"
+	},
+    credits: {
+      enabled: "false"  
+    },
+	legend:{
+		cursor:"pointer",
+		itemclick : toggleDataSeries
+	},
+	data: [{
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00w",
+		name: "Red",
+		dataPoints: dataPoints1
+}, 
+          {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00w",
+		name: "Panel",
+		dataPoints: dataPoints2
+
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00w",
+		name: "Bateria",
+		dataPoints: dataPoints3
+
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00w",
+		name: "Carga",
+		dataPoints: dataPoints4
+
+	}]
+}
+var chart = new CanvasJS.Chart("chartContainer", info);
+
+    
+//Aquí le agregué esto 
+function addData(data) {
+	for (var i = 0; i < data.length; i++) {
+		dataPoints1.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Red)
+		});
+	}
+   
+    for (var i = 0; i < data.length; i++) {
+		dataPoints2.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Panel)
+		});
+    }
+        for (var i = 0; i < data.length; i++) {
+		dataPoints3.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Bateria)
+		});
+	}
+     for (var i = 0; i < data.length; i++) {
+		dataPoints4.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Carga)
+		});
+	}
+    
+    
+	chart.render();
+	
+}
+    
+//Hasta aquí
+    
+function toggleDataSeries(e) {
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	
+	}
+
+}
+  
+
+</script>
+
+
+        
+    
+      
+      
+      
+   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="assets/js/lib/materialize.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+</html>
