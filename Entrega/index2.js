@@ -60,7 +60,7 @@ app.get('/Generar',function(req,res){
 
   //const quer1 = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM diseno_1 ORDER BY fecha DESC, hora DESC LIMIT 100"
 
-  const quer1 = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datos FROM datos ORDER BY fecha DESC, hora DESC LIMIT 100"
+  const quer1 = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos ORDER BY fecha DESC, hora DESC LIMIT 100"
 
 
 
