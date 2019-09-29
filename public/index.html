@@ -25,13 +25,16 @@
 window1()
 	 function window1 () {
 		var dataPoints1 = []
-		console.log(dataPoints1)
 		var dataPoints2 = [];
 		var dataPoints3 = [];
 		var dataPoints4 = [];
 		var data = [];
 			
-		var info = {
+	
+			
+	
+
+		var chart = new CanvasJS.Chart("chartContainer", {
 			zoomEnabled: true,
 			theme:"light2",
 			animationEnabled: true,
@@ -60,7 +63,6 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Red",
 				dataPoints: dataPoints1
 				}, 
@@ -69,7 +71,6 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Panel",
 				dataPoints: dataPoints2
 
@@ -79,7 +80,6 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Bateria",
 				dataPoints: dataPoints3
 
@@ -89,25 +89,13 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Carga",
 				dataPoints: dataPoints4
 
 			}]
-		}
+		});
 			
 		
-		console.log("Asi se ve Datapoints despues")
-		console.log(dataPoints1)
-
-		var chart = new CanvasJS.Chart("chartContainer", info);
-			
-		//Add Data
-		
-
-			
-			
-		//Hasta aquí
 
 		function toggleDataSeries(e) {
 			if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
@@ -115,29 +103,18 @@ window1()
 			} else {
 				e.dataSeries.visible = true;
 			}
+			chart.render();
 			
 		}
 		
-		drawChart();
-		setInterval(drawChart, 9000);
+		
 
-		function drawChart()
-		{
+		function drawChart(){
+			chart.render();
 			
 			console.log("Getting Data")
 			jQuery.getJSON("/Generar", function addData(data) {
-			console.log(data)
-			// dataPoints1=[]
 			for (var i = data.length-1; i >= 0; i--) {
-				console.log("Iteracion"+i)
-				console.log("data["+i+"]")
-				console.log({
-					label: data[i].datetime,
-					y: parseFloat(data[i].P1),
-					
-				})
-				console.log("datapoints1")
-				console.log(dataPoints1)
 				dataPoints1.push({
 					label: data[i].datetime,
 					y: parseFloat(data[i].P1),
@@ -161,44 +138,19 @@ window1()
 					y: parseFloat(data[i].P4),
 				
 					
-				});
-				
+				});	
 			}
-			dataPoints1=[];
-			dataPoints2=[];
-			dataPoints3=[];
-			dataPoints4=[];
+			console.log("Data points")
+			console.log(dataPoints1);
+			console.log(chart.data);
+			chart.render();
 
-			info = {
-			zoomEnabled: true,
-			theme:"light2",
-			animationEnabled: true,
-			zoomEnabled: true,
-			exportEnabled: true,
-			title:{
-				text: "Potencia generada: Nodo 611"
-			},
-			axisY :{
-				includeZero: false,
-				title: "Potencia [W]",
-				suffix: "W"
-			},
-			toolTip: {
-				shared: true
-			},
-			legend:{
-				cursor:"pointer",
-				verticalAlign: "top",
-				fontSize: 22,
-				fontColor: "dimGrey",
-				itemclick : toggleDataSeries
-			},
-			data: [{
+			chart.set("data",
+			[{
 				type: "spline",
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Red",
 				dataPoints: dataPoints1
 				}, 
@@ -207,7 +159,6 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Panel",
 				dataPoints: dataPoints2
 
@@ -217,7 +168,6 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Bateria",
 				dataPoints: dataPoints3
 
@@ -227,22 +177,22 @@ window1()
 				showInLegend: true,
 				yValueFormatString: "##.00 W",
 				xValueFormatString: "hh:mm:ss TT",
-				showInLegend: true,
 				name: "Carga",
 				dataPoints: dataPoints4
 
 			}]
-		}
+			,true)
 
-
-			console.log("Data points")
-			console.log(dataPoints1)
-			chart.render();
-			console.log(dataPoints1)
+			dataPoints1=[];
+			dataPoints2=[];
+			dataPoints3=[];
+			dataPoints4=[];
 		});
 
 					
 		}
+		drawChart();
+		setInterval(drawChart, 9000);
 
 }
     
