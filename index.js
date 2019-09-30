@@ -49,7 +49,7 @@ var con = mysql.createConnection({
 
 const quer1 = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos ORDER BY fecha DESC, hora DESC LIMIT 100";
 const querD = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos ORDER BY fecha DESC, hora DESC LIMIT 288";
-const querS = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos ORDER BY fecha DESC, hora DESC LIMIT 2016";
+
 
 
 con.connect(function(err) {if (err) throw err;});
@@ -99,4 +99,24 @@ app.get('/GenerarWeek',function(req,res){
   
 })
 
+app.get('/GenerarCal',function(req,res){
+  console.log('Generando')
+  console.log(req._parsedUrl.query)
+
+  var Fechas= req._parsedUrl.query.split(",")
+  console.log(Fechas)
+
+ 
+  const querS = "SELECT P1, P2, P3, P4, CONCAT_WS(' ', fecha, hora) AS datetime FROM datos WHERE fecha BETWEEN '" +Fechas[0] +"' AND '" +Fechas[1]+"' ORDER BY fecha DESC, hora DESC LIMIT 2016";
+
+    con.query( querS , function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
+      //console.log(JSON.stringify(result))
+      res.send(JSON.stringify(result));
+      
+      });
+      //con.end(); 
+  
+})
 
