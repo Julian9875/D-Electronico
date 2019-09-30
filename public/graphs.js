@@ -14,8 +14,16 @@ function window1 () {
 		zoomEnabled: true,
 		exportEnabled: true,
 		title:{
-			text: "Potencia generada: Nodo 611"
+			text: "Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Tiempo real"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		axisY :{
 			includeZero: false,
 			title: "Potencia [W]",
@@ -72,8 +80,16 @@ function window1 () {
 		animationEnabled: true,
 		theme:"light2",
 		title:{
-			text: "Potencia actual: Nodo 611"
+			text: "Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Tiempo real"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		legend:{
 			cursor: "pointer"
 		},
@@ -250,8 +266,16 @@ function window2 () {
 		zoomEnabled: true,
 		exportEnabled: true,
 		title:{
-			text: "Potencia generada: Nodo 611"
+			text: "Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Día actual"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		axisY :{
 			includeZero: false,
 			title: "Potencia [W]",
@@ -308,8 +332,16 @@ function window2 () {
 		animationEnabled: true,
 		theme:"light2",
 		title:{
-			text: "Potencia actual: Nodo 611"
+			text: "Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Día actual"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		legend:{
 			cursor: "pointer"
 		},
@@ -483,8 +515,16 @@ function window3 () {
 		zoomEnabled: true,
 		exportEnabled: true,
 		title:{
-			text: "Potencia generada: Nodo 611"
+			text: "Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Día seleccionado"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		axisY :{
 			includeZero: false,
 			title: "Potencia [W]",
@@ -543,6 +583,14 @@ function window3 () {
 		title:{
 			text: "Potencia actual: Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Día seleccionado"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		legend:{
 			cursor: "pointer"
 		},
@@ -715,8 +763,16 @@ function window4 () {
 		zoomEnabled: true,
 		exportEnabled: true,
 		title:{
-			text: "Potencia generada: Nodo 611"
+			text: "Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Última semana"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		axisY :{
 			includeZero: false,
 			title: "Potencia [W]",
@@ -775,6 +831,14 @@ function window4 () {
 		title:{
 			text: "Potencia actual: Nodo 611"
 		},
+		subtitles:[
+		{
+			text: "Última semana"
+			//Uncomment properties below to see how they behave
+			//fontColor: "red",
+			//fontSize: 30
+		}
+		],
 		legend:{
 			cursor: "pointer"
 		},
