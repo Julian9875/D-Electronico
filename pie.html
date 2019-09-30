@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+<div id="chartContainer" style="height: 450px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+window.onload = function () {
+var dataPoints = [];
+var chart = new CanvasJS.Chart("chartContainer", {
+	exportEnabled: true,
+	animationEnabled: true,
+	title:{
+		text: "Potencia generada: Nodo 611"
+	},
+	legend:{
+		cursor: "pointer"
+	},
+	data: [{
+		type: "pie",
+		showInLegend: true,
+        toolTipContent: " <strong>{indexLabel}: {y} Wh</strong>",
+		dataPoints: dataPoints
+	}]
+});  
+var P1 = [];
+var P2 = [];
+var P3 = [];
+var P4 = [];
+var Red = 0;
+var Panel = 0;
+var Bateria = 0;
+var Carga = 0;
+var tot = 0;
+function addData(data) {
+  for(var i = 0; i < data.length; i++){
+    for(var l in data[i]){
+      if(!isNaN(data[i][l])){
+        P1[i] = parseFloat(data[i].P1)
+        P2[i] = parseFloat(data[i].P2) 
+        P3[i] = parseFloat(data[i].P3)
+        P4[i] = parseFloat(data[i].P4) 
+      }  
+    }
+  }
+    
+for(i = 0; i < P1.length; i++){
+Red = Red + P1[i];
+Panel = Panel + P2[i];
+Bateria = Bateria + P3[i];
+Carga = Carga + P4[i];  
+}  
+    
+//PARA LOS DIAS
+Red = Math.round((Red/(P1.length))*24);
+Panel = Math.round((Panel/(P2.length))*24);
+Bateria = Math.round((Bateria/(P3.length))*24);
+    
+//PARA LAS SEMANAS
+//Red = Math.round((Red/(P1.length))*168);
+//Panel = Math.round((Panel/(P2.length))*168);
+//Bateria = Math.round((Bateria/(P3.length))*168);
+    
+//PARA LOS MESES
+//Red = Math.round((Red/(P1.length))*730);
+//Panel = Math.round((Panel/(P2.length))*730);
+//Bateria = Math.round((Bateria/(P3.length))*730);
+//console.log(dataPoints);
+    
+dataPoints.push({indexLabel: "Red", y: Red, name:"Red" },{indexLabel: "Panel", y: Panel, name:"Panel"}, {indexLabel: "Bateria", y: Bateria, name:"Bateria"}); 
+console.log(dataPoints);
+chart.render();
+dataPoints = [];
+Red = 0;
+Panel = 0;
+Bateria = 0;
+Carga = 0;
+}
+function drawChart(){
+  jQuery.getJSON("table.json", addData);
+}    
+setInterval(drawChart,3000)
+}
+</script>    
+</body>
+</html>
