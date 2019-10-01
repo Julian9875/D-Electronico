@@ -1,0 +1,571 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!--- Dropdown menu -->
+<div class="btn-group">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" >
+    Seleccione <span class="caret"></span>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+    <button class="dropdown-item" type="button" onclick= "window1()">Día</button>
+    <button class="dropdown-item" type="button" onclick= "window2()">Semana</button>
+    <button class="dropdown-item" type="button" onclick= "window3()">Mes</button>
+  </div>
+</div>
+<!--- Dropdown menu -->
+</head>
+<body>
+<div id="chartContainer" style="height: 500px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script>
+window1()
+	 function window1 () {
+		var dataPoints1 = []
+		console.log(dataPoints1)
+		var dataPoints2 = [];
+		var dataPoints3 = [];
+		var dataPoints4 = [];
+		var data = [];
+
+		var info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+			}]
+		}
+
+
+		console.log("Asi se ve Datapoints despues")
+		console.log(dataPoints1)
+		var chart = new CanvasJS.Chart("chartContainer", info);
+
+
+		function toggleDataSeries(e) {
+			if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+				e.dataSeries.visible = false;
+			} else {
+				e.dataSeries.visible = true;
+			}
+
+		}
+
+		drawChart();
+		setInterval(drawChart, 9000);
+		function drawChart()
+		{
+			console.log("Getting Data")
+			jQuery.getJSON("/Generar","Case1" ,function addData(data) {
+			console.log(data)
+			// dataPoints1=[]
+			for (var i = 0; i < data.length; i++) {
+				console.log("Iteracion"+i)
+				console.log("data["+i+"]")
+				console.log({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P1),
+
+				})
+				console.log("datapoints1")
+				console.log(dataPoints1)
+				dataPoints1.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P1),
+
+
+				});
+				dataPoints2.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P2),
+
+
+				});
+				dataPoints3.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P3),
+
+
+				});
+				dataPoints4.push({
+					label: data[i].datetime,
+					y: parseFloat(data[i].P4),
+
+
+				});
+
+			}
+			dataPoints1=[];
+			dataPoints2=[];
+			dataPoints3=[];
+			dataPoints4=[];
+			info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+			}]
+		}
+			console.log("Data points")
+			console.log(dataPoints1)
+			chart.render();
+			console.log(dataPoints1)
+		});
+
+		}
+}
+
+</script>
+
+<script>
+
+ function window2 () {
+var dataPoints1 = [];
+var dataPoints2 = [];
+var dataPoints3 = [];
+var dataPoints4 = [];
+var data = [];
+var info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+			}]
+		}
+setInterval(drawChart, 9000);
+ function drawChart()
+   {
+jQuery.getJSON("sample.json", addData);
+   }
+
+var chart = new CanvasJS.Chart("chartContainer", info);
+
+//Aquí le agregué esto
+function addData(data) {
+	for (var i = data.length-1; i > 0; i--) {
+		console.log("Estoy donde no es 2")
+		dataPoints1.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Red)
+		});
+
+		dataPoints2.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Panel)
+		});
+		dataPoints3.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Bateria)
+		});
+
+		dataPoints4.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Carga)
+		});
+	}
+	var dataPoints1 = [];
+	var dataPoints2 = [];
+	var dataPoints3 = [];
+	var dataPoints4 = [];
+	var data = [];
+	info = {
+	theme:"light2",
+	animationEnabled: true,
+    zoomEnabled: true,
+    exportEnabled: true,
+	title:{
+		text: "Potencia generada: Nodo 611"
+	},
+	axisY :{
+		includeZero: false,
+		title: "Potencia [W]",
+		suffix: "W"
+	},
+	toolTip: {
+		shared: "true"
+	},
+	legend:{
+		cursor:"pointer",
+		itemclick : toggleDataSeries
+	},
+	data: [{
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Red",
+		dataPoints: dataPoints1
+},
+          {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Panel",
+		dataPoints: dataPoints2
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Bateria",
+		dataPoints: dataPoints3
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Carga",
+		dataPoints: dataPoints4
+	}]
+}
+	chart.render();
+}
+
+
+//Hasta aquí
+function toggleDataSeries(e) {
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+
+	}
+}
+    </script>
+
+    <script>
+
+ function window3 () {
+var dataPoints1 = [];
+var dataPoints2 = [];
+var dataPoints3 = [];
+var dataPoints4 = [];
+var data = [];
+
+setInterval(drawChart, 9000);
+ function drawChart()
+   {
+jQuery.getJSON("sample.json", addData);
+   }
+
+var info = {
+	theme:"light2",
+	animationEnabled: true,
+    zoomEnabled: true,
+    exportEnabled: true,
+	title:{
+		text: "Potencia generada: Nodo 611"
+	},
+	axisY :{
+		includeZero: false,
+		title: "Potencia [W]",
+		suffix: "W"
+	},
+	toolTip: {
+		shared: "true"
+	},
+	legend:{
+		cursor:"pointer",
+		itemclick : toggleDataSeries
+	},
+	data: [{
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Red",
+		dataPoints: dataPoints1
+},
+          {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Panel",
+		dataPoints: dataPoints2
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Bateria",
+		dataPoints: dataPoints3
+	},
+           {
+		type: "spline",
+		showInLegend: true,
+		yValueFormatString: "##.00 W",
+		name: "Carga",
+		dataPoints: dataPoints4
+	}]
+}
+var chart = new CanvasJS.Chart("chartContainer", info);
+
+//Aquí le agregué esto
+function addData(data) {
+	for (var i = data.length-1; i > 0; i--) {
+		console.log("Estoy donde no es 2")
+		dataPoints1.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Red)
+		});
+
+		dataPoints2.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Panel)
+		});
+
+		dataPoints3.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Bateria)
+		});
+		dataPoints4.push({
+			label: data[i].Date,
+			y: parseFloat(data[i].Carga)
+		});
+	}
+	info = {
+			zoomEnabled: true,
+			theme:"light2",
+			animationEnabled: true,
+			zoomEnabled: true,
+			exportEnabled: true,
+			title:{
+				text: "Potencia generada: Nodo 611"
+			},
+			axisY :{
+				includeZero: false,
+				title: "Potencia [W]",
+				suffix: "W"
+			},
+			toolTip: {
+				shared: true
+			},
+			legend:{
+				cursor:"pointer",
+				verticalAlign: "top",
+				fontSize: 22,
+				fontColor: "dimGrey",
+				itemclick : toggleDataSeries
+			},
+			data: [{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Red",
+				dataPoints: dataPoints1
+				},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Panel",
+				dataPoints: dataPoints2
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Bateria",
+				dataPoints: dataPoints3
+			},
+				{
+				type: "spline",
+				showInLegend: true,
+				yValueFormatString: "##.00 W",
+				xValueFormatString: "hh:mm:ss TT",
+				showInLegend: true,
+				name: "Carga",
+				dataPoints: dataPoints4
+			}]
+		}
+	chart.render();
+}
+
+
+//Hasta aquí
+function toggleDataSeries(e) {
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+
+	}
+}
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

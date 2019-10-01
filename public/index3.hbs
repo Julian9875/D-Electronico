@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<!--Este es el codigo? -->
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+        <link rel="icon" href="img/favicon.png" type="image/png">
+        <title>Proyecto 2</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="vendors/linericon/style.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="vendors/lightbox/simpleLightbox.css">
+        <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css">
+        <link rel="stylesheet" href="vendors/animate-css/animate.css">
+        <link rel="stylesheet" href="vendors/flaticon/flaticon.css">
+        <!-- main css -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/responsive.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="assets/fonts/font-roboto.css" rel="stylesheet">
+        <!-- datetimepicker-->
+        <link href="bootstrapv3/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="bootstrapv3/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+        <!---materialize-->
+        <!---<link rel='stylesheet' href='assets/css/materialize.css'>-->
+        <!-- canvas dashboard--->
+        <link href="assets/web-analytics/style.css" rel="stylesheet">
+        <!--Importar JQuery-->
+        <script src="http://code.jquery.com/jquery-3.4.1.js"></script>
+        </head>
+
+<body>
+
+<!--================Header Menu Area =================-->
+        <header class="header_area">
+            <div class="main_menu">
+            	<nav class="navbar navbar-expand-lg navbar-light">
+					<div class="container box_1620">
+						<!-- Brand and toggle get grouped for better mobile display -->
+                        <!--<a class="navbar-brand logo_h" href="index.html"><img src="img/energy2.png" alt=""></a>-->
+                        <div class="brand">
+                            <a href="index3.hbs">
+                         <span class="lead">Red UniGRID</span></a>
+                        </div>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+							<ul class="nav navbar-nav menu_nav justify-content-center">
+
+								<li class="nav-item"><a class="nav-link" href="#graphs">Valores actuales</a></li>
+								<li class="nav-item submenu dropdown">
+									<a href="#" class="nav-link dropdown-toggle navbar-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Históricos</a>
+									<ul class="dropdown-menu">
+                                        <li class="nav-item"><a class="nav-link" href="#graphs" onclick="window1()" >Tiempo Real</a> </li>
+                                         <li class="nav-item"><a class="nav-link" href="#graphs" onclick="window2()">Día actual</a> </li>
+
+										<li class="nav-item"><a class="nav-link" href="#graphs"onclick="window4()">Última semana</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+            	</nav>
+            </div>
+        </header>
+    <!---end header area--->
+
+
+
+<section id="graphs">
+    <br>
+    <br>
+    <br>
+    <!--<div class="container-fluid">
+   <div class="row m-b-1">
+        <div class="col-md-12" style="height: 60px; width: 85%; margin: 0 auto; max-width: 1280px">
+
+            <h3 class="center black-text"><i class="medium material-icons">power</i><i>Red UniGRID</i></h3>
+
+        </div></div>
+        </div>-->
+
+<div class="container justify-content-center">
+    <div class="row">
+				<div class="col-xl-6">
+					<div class="card card-block">
+						<h4 class="card-title m-b-2">
+							<span id="visitors-chart-heading">Potencia Generada (W) </span>
+						</h4>
+						<div id="chartContainer" style="height: 300px; width: 100%; margin: 0 auto;max-width: 1280px"></div>
+					</div>
+                    <br>
+				</div>
+				<div class="col-xl-6">
+					<div class="card card-block">
+						<h4 class="card-title m-b-1">Energía (Wh)</h4>
+						<div id="chartContainer2" style="height: 300px; width: 100%; margin: 0 auto; max-width: 1280px"></div>
+					</div>
+				</div>
+			</div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> </div>
+
+</section>
+
+<div class="container">
+	<div class='col-md-5'>
+		<div class="form-group">
+			<div class='input-group date' id='datetimepicker6'>
+				<input type='text' class="form-control" />
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class='col-md-5'>
+		<div class="form-group">
+			<div class='input-group date' id='datetimepicker7'>
+				<input type='text' class="form-control" />
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-calendar"></span>
+				</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+    <script src="graphs.js">
+        window1()
+    </script>
+
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/stellar.js"></script>
+        <script src="vendors/lightbox/simpleLightbox.min.js"></script>
+        <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="vendors/isotope/isotope-min.js"></script>
+        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="js/jquery.ajaxchimp.min.js"></script>
+        <script src="vendors/counter-up/jquery.waypoints.min.js"></script>
+        <script src="vendors/counter-up/jquery.counterup.min.js"></script>
+        <script src="js/mail-script.js"></script>
+        <!--gmaps Js-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+        <script src="js/gmaps.min.js"></script>
+        <script src="js/theme.js"></script>
+
+    <!-- datetimepicker-->
+    <script type="text/javascript" src="bootstrapv3/jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+    <!--<script src="js/jquery-3.2.1.min.js"></script>-->
+    <script type="text/javascript" src="bootstrapv3/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrapv3/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="bootstrapv3/js/locales/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	var S6 = false;
+	var S7 = false;
+	var Fechas=[];
+	</script>
+	<script type="text/javascript">
+
+   $(function () {
+        $('#datetimepicker6').datetimepicker({
+        language:  'es',
+        weekStart: 0,
+        todayBtn:  false,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0,
+        pickerPosition: "bottom-left",
+        format: 'dd-mm-yyyy',
+        endDate: new Date(),
+        startDate: "22-09-2019"
+	});
+        $('#datetimepicker7').datetimepicker({
+		useCurrent: false, //Important! See issue #1075
+		language:  'es',
+        weekStart: 0,
+        todayBtn:  false,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0,
+        pickerPosition: "bottom-left",
+        format: 'dd-mm-yyyy',
+        endDate: new Date(),
+        startDate: "22-09-2019"
+        });
+        $("#datetimepicker6").on("changeDate", function (e) {
+			console.log(e.date.getDate())
+			$('#datetimepicker7').datetimepicker('setStartDate', e.date);
+			S6=true
+			var year = e.date.getFullYear();
+			var month = (e.date.getMonth()+1);
+			var day = e.date.getDate();
+			Fechas[0]=year+'-'+month+'-'+day
+			if (S6 && S7){window3()}
+
+        });
+        $("#datetimepicker7").on("changeDate", function (e) {
+			console.log(e.date.getDate())
+			$('#datetimepicker6').datetimepicker('setEndDate', e.date);
+			S7=true
+			var year = e.date.getFullYear();
+			var month = (e.date.getMonth()+1);
+			var day = e.date.getDate();
+			Fechas[1]=year+'-'+month+'-'+day
+			if (S6 && S7){window3()}
+		});
+		Fechas=[];
+    });
+
+    </script>
+</body>
+
+</html>
