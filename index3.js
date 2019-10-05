@@ -24,7 +24,6 @@ app.get('/',(req,res)=>{
 })
 
 // Acceso a base de datos
-
 var mysql = require('mysql');
 var fs = require('fs');
 
